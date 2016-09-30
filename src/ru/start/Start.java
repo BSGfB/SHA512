@@ -1,46 +1,31 @@
 package ru.start;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.math.BigInteger;
+import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.lang.Integer;
 import ru.objects.SHA512;
 
 public class Start {
 
-	public static void main(String[] args) {
-		byte a = 1;
-		System.out.print(a ^ (-128));
+	public static void main(String[] args) throws IOException {		
+		BufferedReader reader = new BufferedReader(new FileReader("src/ru/resource/Text"));
+			
 		
-		/*
-		byte[] array = new byte[1020];
-		for(int i = 0; i < array.length; i++) {
-			array[i] = (byte)(i % 128);
+		CharBuffer buffer = CharBuffer.allocate(20000);
+		reader.read(buffer);
+		reader.close();
+		
+		String str = new String(buffer.array());
+		System.out.println(str);
+		long[] array = SHA512.Hash(str);
+		for(int i = 0; i < array.length; ++i) {
+			System.out.println(array[i]);
 		}
-		
-		byte[][] cube = SHA512.get128BytesBlocks(array);
-		for(int i = 0; i < cube.length; i++) {
-			for(int j = 0; j < cube[i].length; j++) {
-				System.out.print(cube[i][j] + " ");				
-			}
-			System.out.println();	
-		}
-		
-		byte[][] cube2 = SHA512.get8BytesBlocks(cube[0]);
-		for(int i = 0; i < cube2.length; i++) {
-			for(int j = 0; j < cube2[i].length; j++) {
-				System.out.print(cube2[i][j] + " ");				
-			}
-			System.out.println();	
-		}
-		*/
-		/*
-		BigInteger a = new BigInteger("101000001000000001", 2);
-		System.out.println("a: " + a.toString(2));
-		
-		BigInteger b = new BigInteger(SHA512.No(a.toByteArray()));
-		System.out.println("b: " + b.toString(2));
-		*/
 	}
 	
 	public static byte[] f(byte[] base, int n) {
